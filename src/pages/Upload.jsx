@@ -1,26 +1,49 @@
-import { useState } from "react";
-import FileUpload from "../components/FileUpload";
-import FileList from "../components/FileList";
+import { useEffect, useState } from "react";
+import { AiOutlinePlus } from "react-icons/ai";
+import "../stylesheet/_upload.scss";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "../firebase";
+import FilesList from "../components/FilesList";
 
-const Upload = () => {
-  const [files, setFiles] = useState([]);
-  const [urls, setUrls] = useState([]);
+const Upload = ({files, setFiles, urls, setUrls}) => {
+  
+  const upload = (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+    const fileRef = ref(storage, `${file.name}`);
+    uploadBytes(fileRef, file)
+      .then(() => {
+        file.isUploading = false;
+        setFiles([...files, file]);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
 
-  const removeFile = (filename) => {
-    setFiles(files.filter((file) => file.name !== filename));
+    getDownloadURL(ref(storage, file.name)).then((url) => {
+      setUrls([...urls, url]);
+    });
   };
-
   return (
-    <div>
-      <div className="title">Upload file</div>
-      <FileUpload
-        files={files}
-        setFiles={setFiles}
-        removeFile={removeFile}
-        setUrls={setUrls}
-        urls={urls}
-      />
-      <FileList files={files} removeFile={removeFile} />
+    <div className="upload">
+      <h2>Upload</h2>
+      <div className="input-field">
+        <input type="file" onChange={(e) => upload(e)} />
+        <div className="overlay">
+          <button>
+            <span>
+              <AiOutlinePlus />
+            </span>
+            Upload
+          </button>
+          <div>
+            <p>Supported files</p>
+            <p>PDF, JPG, PNG</p>
+          </div>
+        </div>
+      </div>
+
+      {files && <FilesList files={files} />}
     </div>
   );
 };

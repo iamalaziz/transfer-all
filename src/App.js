@@ -1,17 +1,21 @@
 import Upload from "./pages/Upload";
+import { useState } from "react";
 import Download from "./pages/Download";
-import Main from "./pages/Main";
-
-import { Routes, Route } from "react-router-dom";
 
 function App() {
+  const [files, setFiles] = useState([]);
+  const [urls, setUrls] = useState([]);
   return (
     <div className="App">
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/upload" element={<Upload />} />
-        <Route path="/download" element={<Download />} />
-      </Routes>
+      <h1>Transfer All</h1>
+      <Upload files={files} setFiles={setFiles} urls={urls} setUrls={setUrls} />
+      <p className="or">OR</p>
+      <Download
+        files={files}
+        setFiles={setFiles}
+        urls={urls}
+        setUrls={setUrls}
+      />
     </div>
   );
 }

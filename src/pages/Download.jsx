@@ -1,12 +1,14 @@
-import React from 'react'
+import React from "react";
+import "../stylesheet/_download.scss";
 
-const Download = () => {
-
+const Download = ({ files, urls, setFiles, setUrls }) => {
+  
   return (
-    <div>
-      Download
+    <div className="download">
+      <h2>Download</h2>
+      <div></div>
     </div>
-  )
-}
+  );
+};
 
-export default Download
+export default Download;
