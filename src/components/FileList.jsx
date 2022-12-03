@@ -1,21 +1,45 @@
-import React from "react";
-import axios from "axios";
 import FileItem from "./FileItem";
+import { db, storage } from "../firebase";
+import { ref, deleteObject } from "firebase/storage";
+import { addDoc, collection } from "firebase/firestore/lite";
+import { useState } from "react";
 
 const FileList = ({ files, removeFile }) => {
-  const deleteFileHandler = (_name) => {
-    axios
-      .delete(`http://localhost:8080/upload?name=${_name}`)
-      .then((res) => removeFile(_name))
-      .catch((err) => console.error(err));
+
+  const deleteFileHandler = (filename) => {
+    removeFile(filename);
+
+    const fileRef = ref(storage, `${filename}`);
+    deleteObject(fileRef)
+      .then(() => {
+        console.log("deleted");
+      })
+      .catch((error) => {
+        alert("Something went wrong!");
+      });
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const docRef = await addDoc(collection(db, "uploads"), {
+        files: files,
+        password: 1234,
+      });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.log("Error adding document: ", e);
+    }
   };
   return (
-    <ul className="file-list">
-      {files &&
-        files.map((f) => (
-          <FileItem key={f.name} file={f} deleteFile={deleteFileHandler} />
-        ))}
-    </ul>
+    <div className="file-list-container">
+      <ul className="file-list">
+        {files &&
+          files.map((f) => (
+            <FileItem key={f.name} file={f} deleteFile={deleteFileHandler} />
+          ))}
+      </ul>
+      {files.length !== 0 && <button onClick={handleSubmit}>Submit</button>}
+    </div>
   );
 };
 

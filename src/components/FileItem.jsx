@@ -1,13 +1,12 @@
-import React from "react";
 import { AiFillFileText } from "react-icons/ai";
-import {ImSpinner} from "react-icons/im";
-import {FaTrashAlt} from 'react-icons/fa'
+import { ImSpinner } from "react-icons/im";
+import { FaTrashAlt } from "react-icons/fa";
 
 const FileItem = ({ file, deleteFile }) => {
   return (
     <>
       <li className="file-item" key={file.name}>
-        <AiFillFileText/>
+        <AiFillFileText />
         <p>{file.name}</p>
         <div className="actions">
           <div className="loading"></div>
@@ -18,9 +17,7 @@ const FileItem = ({ file, deleteFile }) => {
             />
           )}
           {!file.isUploading && (
-            <FaTrashAlt
-              onClick={() => deleteFile(file.name)}
-            />
+            <FaTrashAlt onClick={() => deleteFile(file.name)} />
           )}
         </div>
       </li>

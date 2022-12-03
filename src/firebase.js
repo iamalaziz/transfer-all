@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
+import { getFirestore, collection, getDocs } from "firebase/firestore/lite";
 
 // since it is in test mode, i didn't hide my credentials
 
@@ -13,6 +14,6 @@ const firebaseConfig = {
   appId: "1:568075505190:web:25ab31f2925a5fe01e60e7",
 };
 
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
 export const storage = getStorage(app);
-
+export const db = getFirestore(app);

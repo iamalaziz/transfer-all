@@ -5,15 +5,18 @@
 }
 
 body {
-  margin: 0;
+  margin: 0 auto;
   font-family: "Open-Sans", sans-serif;
   color: #343a4a;
+  min-height: 100vh;
+}
+.App {
   display: flex;
   justify-content: center;
-  min-height: 100vh;
-  padding: 80px;
+  width: 100%;
 }
 .title {
+  margin-top: 100px;
   font-weight: bold;
   font-size: 1.2rem;
   margin-bottom: 1em;
@@ -132,7 +135,45 @@ code {
 
     .fa-spinner {
       font-size: 1.2em;
-      transform: rotate(360deg)
+      transform: rotate(360deg);
     }
+  }
+}
+
+.main-page {
+  height: 100vh;
+  width: 100%;
+  background-color: aliceblue;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  align-items: flex-start;
+  padding-top: 100px;
+  a {
+    padding: 20px 40px;
+    border-radius: 8px;
+    background-color: #f15120;
+    text-decoration: none;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    svg {
+      font-size: 25px;
+      margin-right: 15px;
+    }
+  }
+}
+.file-list-container {
+  button {
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #f55321;
+    color: #fff;
+    border-radius: 6px;
+    border: none;
+    font-size: 18px;
+    float: right;
+    cursor: pointer;
+    
   }
 }

@@ -1,38 +1,36 @@
 import { AiOutlinePlus } from "react-icons/ai";
-import React from "react";
-import axios from "axios";
+import { storage } from "../firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-const FileUpload = ({ files, setFiles, removeFile }) => {
+const FileUpload = ({ files, setFiles, removeFile, urls, setUrls }) => {
   const uploadHandler = (event) => {
     const file = event.target.files[0];
     if (!file) return;
     file.isUploading = true;
-    setFiles([...files, file]);
-
-    // upload file
-    const formData = new FormData();
-    formData.append("newFile", file, file.name);
-    axios
-      .post("http://localhost:8080/upload", formData)
-      .then((res) => {
+    const fileRef = ref(storage, `${file.name}`);
+    uploadBytes(fileRef, file)
+      .then(() => {
+        console.log("Uploaded a file");
         file.isUploading = false;
         setFiles([...files, file]);
       })
       .catch((err) => {
-        // inform the user
         console.error(err);
         removeFile(file.name);
       });
+
+    setUrls([...urls, getDownloadURL(fileRef)]);
+    console.log(urls);
   };
 
   return (
-    <>
+    <div>
       <div className="file-card">
         <div className="file-inputs">
           <input type="file" onChange={uploadHandler} />
           <button>
             <i>
-              <AiOutlinePlus/>
+              <AiOutlinePlus />
             </i>
             Upload
           </button>
@@ -41,7 +39,7 @@ const FileUpload = ({ files, setFiles, removeFile }) => {
         <p className="main">Supported files</p>
         <p className="info">PDF, JPG, PNG</p>
       </div>
-    </>
+    </div>
   );
 };
 
