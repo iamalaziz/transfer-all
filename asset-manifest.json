@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/transfer-all/static/css/main.489da3e1.css",
+    "main.js": "/transfer-all/static/js/main.4b36cfe1.js",
+    "index.html": "/transfer-all/index.html",
+    "main.489da3e1.css.map": "/transfer-all/static/css/main.489da3e1.css.map",
+    "main.4b36cfe1.js.map": "/transfer-all/static/js/main.4b36cfe1.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.489da3e1.css",
+    "static/js/main.4b36cfe1.js"
+  ]
+}
